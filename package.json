@@ -1,0 +1,19 @@
+{
+  "name": "simple-conf",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm run --parallel dev",
+    "dev:web": "pnpm --filter @simpleconf/web dev",
+    "dev:api": "pnpm --filter @simpleconf/api dev",
+    "build": "pnpm run --parallel build",
+    "test": "pnpm run --parallel test",
+    "lint": "pnpm run --parallel lint",
+    "db:migrate": "pnpm --filter @simpleconf/api db:migrate",
+    "db:seed": "pnpm --filter @simpleconf/api db:seed",
+    "db:reset": "pnpm --filter @simpleconf/api db:reset"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}
