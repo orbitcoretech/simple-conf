@@ -1,6 +1,7 @@
 import Fastify, { type FastifyInstance } from 'fastify';
 import cors from '@fastify/cors';
 import { registerEnv } from './config/env.js';
+import databasePlugin from './plugins/database.js';
 import type { HealthResponse } from '@simpleconf/shared';
 
 export async function buildApp(): Promise<FastifyInstance> {
@@ -29,6 +30,9 @@ export async function buildApp(): Promise<FastifyInstance> {
     origin: app.config.CORS_ORIGIN,
     credentials: true,
   });
+
+  // Register database connection
+  await app.register(databasePlugin);
 
   // Health check endpoint
   app.get<{ Reply: HealthResponse }>('/health', async (_request, _reply) => {
