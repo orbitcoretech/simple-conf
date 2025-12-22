@@ -2,6 +2,8 @@ import Fastify, { type FastifyInstance } from 'fastify';
 import cors from '@fastify/cors';
 import { registerEnv } from './config/env.js';
 import databasePlugin from './plugins/database.js';
+import jwtPlugin from './plugins/jwt.js';
+import { authRoutes } from './modules/auth/index.js';
 import type { HealthResponse } from '@simpleconf/shared';
 
 export async function buildApp(): Promise<FastifyInstance> {
@@ -33,6 +35,12 @@ export async function buildApp(): Promise<FastifyInstance> {
 
   // Register database connection
   await app.register(databasePlugin);
+
+  // Register JWT plugin
+  await app.register(jwtPlugin);
+
+  // Register API routes
+  await app.register(authRoutes, { prefix: '/api' });
 
   // Health check endpoint
   app.get<{ Reply: HealthResponse }>('/health', async (_request, _reply) => {

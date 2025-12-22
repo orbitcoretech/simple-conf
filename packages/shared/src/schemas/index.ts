@@ -1,2 +1,2 @@
-// Placeholder schemas - to be expanded in future stories
-export {};
+// Auth schemas
+export * from './auth';
