@@ -1,8 +1,8 @@
-import bcrypt from 'bcrypt';
-import type { FastifyInstance } from 'fastify';
-import type { User } from '@simpleconf/shared';
-import type { RegisterInput, LoginInput } from '@simpleconf/shared';
-import { UserRepository } from '../repositories/user.repository.js';
+import bcrypt from "bcrypt";
+import type { FastifyInstance } from "fastify";
+import type { User } from "@simpleconf/shared";
+import type { RegisterInput, LoginInput } from "@simpleconf/shared";
+import { UserRepository } from "../repositories/user.repository.js";
 
 const BCRYPT_COST_FACTOR = 10;
 
@@ -22,8 +22,8 @@ export class AuthService {
     const emailExists = await this.userRepository.emailExists(data.email);
 
     if (emailExists) {
-      const error = new Error('Email already registered');
-      (error as Error & { code: string }).code = 'CONFLICT';
+      const error = new Error("Email already registered");
+      (error as Error & { code: string }).code = "CONFLICT";
       throw error;
     }
 
@@ -41,16 +41,19 @@ export class AuthService {
     const user = await this.userRepository.findByEmail(data.email);
 
     if (!user) {
-      const error = new Error('Invalid email or password');
-      (error as Error & { code: string }).code = 'UNAUTHORIZED';
+      const error = new Error("Invalid email or password");
+      (error as Error & { code: string }).code = "UNAUTHORIZED";
       throw error;
     }
 
-    const isValidPassword = await this.verifyPassword(data.password, user.passwordHash);
+    const isValidPassword = await this.verifyPassword(
+      data.password,
+      user.passwordHash
+    );
 
     if (!isValidPassword) {
-      const error = new Error('Invalid email or password');
-      (error as Error & { code: string }).code = 'UNAUTHORIZED';
+      const error = new Error("Invalid email or password");
+      (error as Error & { code: string }).code = "UNAUTHORIZED";
       throw error;
     }
 
